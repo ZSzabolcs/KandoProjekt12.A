@@ -1,0 +1,30 @@
+header{
+    background-color: bisque;
+    height: 160px;
+}
+
+header h1{
+    padding-top: 50px;
+}
+
+.navpad{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.min-vh-63 {
+    min-height: 63vh;
+    display: flex;
+    flex-direction: column;
+}
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.container{
+    background-color: lightgreen;
+}
+
+.footer{
+    background-color: bisque;
+}
