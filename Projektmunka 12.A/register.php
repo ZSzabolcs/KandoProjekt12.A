@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 // Ha a felhasználónév már létezik, hibaüzenetet jelenítünk meg
                 echo '<div class="message error">The username is already taken. Please choose another one.</div>';
                 $stmt->close();
-                //$conn->close();
+                $conn->close();
                 break;
             } else {
                 // Ha a felhasználónév nem létezik, folytatjuk a regisztrációt
