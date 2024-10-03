@@ -22,9 +22,13 @@ header h1{
 }
 
 .container{
-    background-color: lightgreen;
+    background-color: rgb(245, 245, 245);
 }
 
 .footer{
     background-color: bisque;
+}
+
+.navbarcucc{
+    background-color: mediumseagreen;
 }
