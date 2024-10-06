@@ -1,3 +1,7 @@
+body{
+    background-color: rgb(245, 245, 245);
+}
+
 header{
     background-image: url(kepek/1728229808390.jpg);
     height: 160px;
@@ -55,11 +59,16 @@ header h1{
 }
 
 .container{
-    background-color: rgb(245, 245, 245);
+    background-color: white;
+    color: darkolivegreen;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .footer{
-    background-color: bisque;
+    background-color: rgb(223, 221, 221);
+    color: black;
+    font-size: large;
 }
 
 .navbarcucc{
@@ -72,9 +81,17 @@ header h1{
 }
 
 .nav-link{
-    color: black
+    color: black;
+    font-size: large;
 }
 
 .nav-link:hover{
     color: darkolivegreen;
+}
+
+.container p {
+    text-indent: 20px;
+    text-align: justify;
+    padding-top: 15px;
+    font-size: larger;
 }
