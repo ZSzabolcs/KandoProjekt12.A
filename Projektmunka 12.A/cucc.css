@@ -1,10 +1,43 @@
 header{
-    background-color: bisque;
+    background-image: url(kepek/1728229808390.jpg);
     height: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(kepek/1728229808390.jpg);
+    background-size: cover;
+    filter: blur(5px);
+    z-index: 1;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Halvány fekete háttérréteg */
+    z-index: 2;
 }
 
 header h1{
     padding-top: 50px;
+    position: relative;
+    z-index: 3; /* Szöveg a háttér előtt */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding-top: 50px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 .navpad{
@@ -31,4 +64,9 @@ header h1{
 
 .navbarcucc{
     background-color: mediumseagreen;
+}
+
+.cim {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Fekete árnyék */
+    color: white; /* Fehér szöveg */
 }
