@@ -60,9 +60,24 @@ header h1{
 
 .container{
     background-color: white;
-    color: darkolivegreen;
+    color: rgb(33, 41, 19);
     padding-left: 40px;
     padding-right: 40px;
+}
+
+.container h1{
+    color: darkolivegreen;
+}
+
+.container h2{
+    color: darkolivegreen
+}
+
+.container p {
+    text-indent: 35px;
+    text-align: justify;
+    padding-top: 15px;
+    font-size: larger;
 }
 
 .footer{
@@ -75,11 +90,6 @@ header h1{
     background-color: mediumseagreen;
 }
 
-.cim {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Fekete árnyék */
-    color: white; /* Fehér szöveg */
-}
-
 .nav-link{
     color: black;
     font-size: large;
@@ -89,9 +99,6 @@ header h1{
     color: darkolivegreen;
 }
 
-.container p {
-    text-indent: 20px;
-    text-align: justify;
-    padding-top: 15px;
-    font-size: larger;
+b{
+    color: rgb(95, 146, 95);
 }
