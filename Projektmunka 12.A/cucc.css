@@ -67,16 +67,17 @@ header h1{
 
 .container h1{
     color: darkolivegreen;
+    padding-bottom: 15px;
 }
 
 .container h2{
-    color: darkolivegreen
+    color: darkolivegreen;
+    padding-bottom: 15px;
 }
 
 .container p {
     text-indent: 35px;
     text-align: justify;
-    padding-top: 15px;
     font-size: larger;
 }
 
@@ -101,4 +102,55 @@ header h1{
 
 b{
     color: rgb(95, 146, 95);
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+.message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.form{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    font-size: larger;
+}
+#username{
+    margin-left: 5.5px;
+}
+
+#email{
+    margin-left: 53px;
+}
+
+#password{
+    margin-left: 84px;
+}
+
+#username1{
+    margin-left: 5.5px;
+}
+
+#email1{
+    margin-left: 53px;
+}
+
+#password1{
+    margin-left: 84px;
+}
+
+.submit{
+    background-color: rgb(169, 245, 169);
 }
