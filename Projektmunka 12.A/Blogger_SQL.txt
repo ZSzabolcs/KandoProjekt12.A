@@ -1,13 +1,14 @@
 DROP DATABASE IF EXISTS blogger;
 
-CREATE DATABASE IF NOT EXISTS blogger DEFAULT CHARACTER SET utf8;
+CREATE DATABASE IF NOT EXISTS blogger DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
-CREATE TABLE blogger.user (
+CREATE TABLE `blogger`.`user` (
 username VARCHAR(30) PRIMARY KEY NOT NULL,
 email VARCHAR(40) NOT NULL,
 password VARCHAR(30) NOT NULL
 )
 ENGINE = InnoDB;
+
 
 CREATE TABLE `blogger`.`blog` (
 `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -16,10 +17,11 @@ CREATE TABLE `blogger`.`blog` (
 `blog_content` TEXT NOT NULL,
 `blog_made_date` DATE NOT NULL,
 `shared_blog_number` INT DEFAULT 0,
-CONSTRAINT FK_blogger_blog FOREIGN KEY (username)
+CONSTRAINT FK_blog_user FOREIGN KEY (username)
 REFERENCES user(username)
 )
 ENGINE = InnoDB;
+
 
 CREATE TABLE `blogger`.`comment` (
 `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
@@ -29,16 +31,35 @@ CREATE TABLE `blogger`.`comment` (
 `comment_date` DATE NOT NULL, 
 `like_number` INT DEFAULT 0, 
 `dislike_number` INT DEFAULT 0,
-CONSTRAINT FK_blog_comment FOREIGN KEY (username)
+CONSTRAINT FK_comment_user FOREIGN KEY (username)
 REFERENCES user(username),
-CONSTRAINT FK_blog_title FOREIGN KEY (blog_title)
+CONSTRAINT FK_comment_blog_title FOREIGN KEY (blog_title)
 REFERENCES blog(blog_title)
- )
- ENGINE = InnoDB;
-
-CREATE TABLE `blogger`.`chat`(
-`id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-`chatroom_name` VARCHAR(30) NOT NULL,
-`chat_leader` VARCHAR(30) NOT NULL
 )
- ENGINE = InnoDB;
+ENGINE = InnoDB;
+
+
+/*Chat előretervezett felépítése*/
+/*
+CREATE TABLE `blogger`.`group_name` (
+id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+username VARCHAR(30) NOT NULL,
+message_text TEXT NOT NULL,
+message_date TIMESTAMP NOT NULL,
+CONSTRAINT FK_group_member FOREIGN KEY (username)
+REFERENCES group_member(username)
+)
+ENGINE = InnoDB;
+
+
+CREATE TABLE `blogger`.`group_member` (
+id INT AUTO_INCREMENT PRIMARY KEY,
+username VARCHAR(30) NOT NULL UNIQUE,
+CONSTRAINT FK_member_username FOREIGN KEY (username)
+REFERENCES user(username)
+)
+ENGINE = InnoDB;
+*/
+
+
+
