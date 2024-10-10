@@ -1,0 +1,8 @@
+Blog backendje - 2024.10.20.
+Blog frontendje - 2024.10.25.
+
+Közösségi tér frontendje- 2024.10.31.
+Közösségi tér backendje - 2024.11.05.
+
+Privát chat backendje - 2024.11.30.
+Privát chat frontendje - 2024.12.05.
