@@ -1,8 +1,10 @@
 <?php 
 namespace Main;
-include "Developer_class.php";
+use PDO;
+use PDOException;
 include "Login_register_class.php";
-$developer = new Developer();
+session_name('user');
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -59,6 +61,46 @@ $developer = new Developer();
                 <input type="password" id="password1" name="password" required><br>
                 <button type="submit" name="action" value="login" class="submit my-4">Bejelentkezés</button>
             </form>
+            
+          <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      try {
+          $db = new PDO('sqlite:Blogger.db');
+          $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $username = Login_Register::TestInput($_POST['username']);
+          $email = Login_Register::TestInput($_POST['email']);
+          $password = Login_Register::TestInput($_POST['password']);
+          //$password = password_hash($password, PASSWORD_DEFAULT);
+          $u = 'username'; $e = 'email'; $p = 'password';
+
+          $sql_finding = "SELECT password FROM user WHERE $u = :$u AND $e = :$e";
+          $stmt = $db->prepare($sql_finding);
+          $stmt->bindValue(":$u", $username, PDO::PARAM_STR);
+          $stmt->bindValue(":$e", $email, PDO::PARAM_STR);
+          $stmt->execute();
+
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          if ($row) {
+              $hashed_password = $row[$p];
+
+              if (password_verify($password, $hashed_password)) {
+                  echo "Bejelentkezés sikeres!";
+                  $_SESSION['user'] = $username;
+                  Login_register::ToAnotherPage('cucc.php');
+            } else {
+                echo "A jelszó helytelen!";
+              }
+          } else {
+              echo "Nincs ilyen felhasználó!";
+          }
+      
+      } catch(PDOException $e){
+          echo 'Hiba történt '.$ $e->getMessage();
+      }
+      $db = null;
+    }
+        ?>
+          <a href="<?php echo htmlspecialchars('register.php'); ?>">Még nincs fiókod? </a>
         </div>
     </div>
     <footer class="container py-3 footer">
@@ -67,28 +109,3 @@ $developer = new Developer();
 
 </body>
 </html>
-
-<?php
-$t = [];
-$myfile = fopen("newfile.txt", "r") or die("Unable to open file!");
-$i = 0;
-$ti = -1;
-$tx = "";
-while(!feof($myfile)) {
-    if(fgetc($myfile) !== ","){
-        $tx[$ti + 1] = fgetc($myfile);
-        $ti++; 
-    }
-    else if (fgetc($myfile) === ","){
-        array_push($t, $tx);
-        $tx = "";
-        $ti = 0;
-    }
-}
-
-//fread($myfile,filesize("newfile.txt"));
-fclose($myfile);
-foreach ($t as $value) {
-    echo $value;
-}
-?>

@@ -17,8 +17,12 @@ final class Login_register{
        session_start();
        header("Location: $web_name");
        $database->close();
-       echo "Registration successfull!!!";
        
+   }
+
+   public static function ToAnotherPage($web_name){
+    header("Location: $web_name");
+    exit();
    }
 }
 ?>

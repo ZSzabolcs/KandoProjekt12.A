@@ -1,6 +1,6 @@
 <?php
 namespace Main;
-final class Developer
+final class DeveloperDB
 {
     private string $servername;
     private string $db_username;
