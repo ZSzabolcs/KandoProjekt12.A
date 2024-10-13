@@ -3,8 +3,8 @@ namespace Main;
 use PDO;
 use PDOException;
 include "Login_register_class.php";
-session_name('user');
-session_start();
+//session_name('user');
+//session_start();
     ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -60,7 +60,7 @@ session_start();
                 <input type="text" id="username" name="username" required><br>
                 <label for="password">Jelszó:</label>
                 <input type="password" id="password" name="password" required><br>
-                <button type="submit" name="action" value="register" class="submit my-4">Regisztráció</button>
+                <button type="submit" name="action" value="register" onclick="Regist()" class="submit my-4">Regisztráció</button>
             </form>
             <?php
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -120,6 +120,7 @@ session_start();
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>
