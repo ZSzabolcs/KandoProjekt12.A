@@ -48,7 +48,7 @@ session_start();
           
           </nav>
         <div class="container flex-grow-1 min-vh-63 py-3">
-            <h1 class="username">Üdvözöljük<i> <?php  echo $_SESSION['user']; ?></i>!</h1>
+            <h1 class="username">Üdvözöljük<i></i>!</h1>
             <h1 class="text-center">
               Rólunk
             </h1>

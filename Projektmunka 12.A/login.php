@@ -3,8 +3,8 @@ namespace Main;
 use PDO;
 use PDOException;
 include "Login_register_class.php";
-//session_name('user');
-//session_start();
+session_name('user');
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -51,7 +51,7 @@ include "Login_register_class.php";
     <div class="container flex-grow-1 min-vh-63 py-3">
         <h1 class="text-center">Bejelentkezés</h1>
         <div class="form">
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
                 
                 <label for="email1">Email cím:</label>
                 <input type="email" id="email1" name="email" required><br>
@@ -67,9 +67,9 @@ include "Login_register_class.php";
       try {
           $db = new PDO('sqlite:Blogger.db');
           $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $username = Login_Register::TestInput($_POST['username']);
-          $email = Login_Register::TestInput($_POST['email']);
-          $password = Login_Register::TestInput($_POST['password']);
+          $username = Login_register::TestInput($_POST['username']);
+          $email = Login_register::TestInput($_POST['email']);
+          $password = Login_register::TestInput($_POST['password']);
           $u = 'username'; $e = 'email'; $p = 'password';
 
           $sql_finding = "SELECT password FROM user WHERE $u = :$u AND $e = :$e";
@@ -105,6 +105,6 @@ include "Login_register_class.php";
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
-    <script src="script.js"></script>
+    <script src="methods.js"></script>
 </body>
 </html>

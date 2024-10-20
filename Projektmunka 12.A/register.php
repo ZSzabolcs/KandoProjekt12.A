@@ -3,9 +3,9 @@ namespace Main;
 use PDO;
 use PDOException;
 include "Login_register_class.php";
-//session_name('user');
-//session_start();
-    ?>
+session_name('user');
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -77,7 +77,7 @@ include "Login_register_class.php";
                     $password = Login_Register::TestInput($_POST['password']);
                     $password = password_hash($password, PASSWORD_DEFAULT);
                     $u = 'username'; $e = 'email'; $p = 'password';
-
+                    
                     //Felhasználó ellenőrzése
                     $sql_check_username = "SELECT COUNT(*) as piece FROM user WHERE $u = :$u";
                     $stmt = $db->prepare($sql_check_username);
@@ -89,6 +89,7 @@ include "Login_register_class.php";
                         // Ha a felhasználónév már létezik, hibaüzenetet jelenítünk meg
                         echo "A felhasználónév létezik!";
                     } else {
+                        
                         // Ha a felhasználónév nem létezik, folytatjuk a regisztrációt
                         $sql_insert = "INSERT INTO user ($u, $e, $p) VALUES (:$u, :$e, :$p)";
                         $stmt = $db->prepare($sql_insert);
@@ -120,7 +121,7 @@ include "Login_register_class.php";
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
-    <script src="script.js"></script>
+    <script src="methods.js"></script>
 </body>
 
 </html>
