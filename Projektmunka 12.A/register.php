@@ -99,9 +99,22 @@ session_start();
 
                         $success = $stmt->execute();
                         if ($success) {
-                            echo "Sikeres regisztráció!!!";
                             $_SESSION['user'] = $username;
-                            Login_register::ToAnotherPage("cucc.php");
+                            $directory_name = $username."/public";
+                            $current_path = getcwd();
+                            $directory_path = realpath($current_path . DIRECTORY_SEPARATOR . $directory_name);
+                            if ($directory_path === false) {
+                                $directory_path = $current_path . DIRECTORY_SEPARATOR . $directory_name;
+                                if (mkdir($directory_path, 0755, true)) {
+                                    echo "Sikeres regisztráció!!!";
+                                    Login_register::ToAnotherPage("cucc.php");
+                                } else {
+                                    echo "Hiba a mappa létrehozásakor.";
+                                }
+                            } else {
+                                echo "A felhasználó létezik!!!";
+                            }
+
                         } else {
                             echo "Hiba történt, próbálja meg később!";
                         }
