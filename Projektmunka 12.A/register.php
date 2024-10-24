@@ -100,7 +100,7 @@ session_start();
                         $success = $stmt->execute();
                         if ($success) {
                             $_SESSION['user'] = $username;
-                            $directory_name = $username."/public";
+                            $directory_name = "/kepek/".$username."/public";
                             $current_path = getcwd();
                             $directory_path = realpath($current_path . DIRECTORY_SEPARATOR . $directory_name);
                             if ($directory_path === false) {
