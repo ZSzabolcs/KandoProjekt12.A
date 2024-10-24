@@ -154,3 +154,25 @@ b{
 .submit{
     background-color: rgb(169, 245, 169);
 }
+
+.blogbej{
+    background-color: rgb(239, 234, 234);
+    color: black;
+}
+
+.blogbejhatter{
+    background-color: rgb(245, 245, 245);
+}
+
+.more{
+    color: #155724;
+    font-size: larger;
+    float: right;
+}
+
+button{
+    border: none;
+    background: none;
+    padding: none;
+    margin: none;
+}
