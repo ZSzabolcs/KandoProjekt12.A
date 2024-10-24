@@ -176,3 +176,17 @@ button{
     padding: none;
     margin: none;
 }
+
+.collapse{
+    padding-bottom: 5px;
+}
+
+.comment{
+    background-color: white;
+    color: black;
+}
+
+.commenter{
+    color: #155724;
+    font-size: larger;
+}
