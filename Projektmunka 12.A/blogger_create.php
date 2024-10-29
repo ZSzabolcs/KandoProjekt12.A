@@ -94,9 +94,8 @@ session_start();
         </form>
 
         <?php
-        #$username = $_SESSION['user'];
-        $username = "az1";
-        $blog_title = "A fa jóóó";
+        $username = $_SESSION['user'];
+        $blog_title = "Most komolyan!!";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $db = new PDO('sqlite:Blogger.db');
@@ -104,7 +103,7 @@ session_start();
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $blog_content = Login_register::TestInput($_POST["content"]);
             $decoded_content = html_entity_decode($blog_content);
-            $u = "username"; $bt = "blog_title"; $bc = "blog_content"; $bm = "blog_made_date";
+            $u = "blog_username"; $bt = "blog_title"; $bc = "blog_content"; $bm = "blog_made_date";
             $sql_blog = "INSERT INTO blog ($u, $bt, $bc, $bm) VALUES (:$u, :$bt, :$bc, :$bm)";
             $now = date("Y-m-d");
 
@@ -137,29 +136,8 @@ session_start();
         }
     }
     ?>
-    <br>
-    <p>
-        <?php
-            try {
-            $db = new PDO('sqlite:Blogger.db');
-            $db->exec('PRAGMA foreign_keys = ON;');
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql_select_blog = "SELECT blog_content FROM blog WHERE username = 'az1'";
-            $result = $db->query($sql_select_blog);
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                $adat = $row['blog_content'];
-                echo "<div class='post'>";
-                echo $adat;
-                echo "</div><hr>";
-            }
-        }
-        catch (PDOException $e){
-            echo "Hiba történt". $e->getMessage();
-        }
-        ?>
-        
-    </p>
-</div>
+    </div>
+<script src="methods.js"></script>
 </body>
 </html>
 

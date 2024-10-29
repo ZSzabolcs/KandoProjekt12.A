@@ -48,7 +48,12 @@ session_start();
           
           </nav>
         <div class="container flex-grow-1 min-vh-63 py-3">
-            <h1 class="username">Üdvözöljük<i></i>!</h1>
+            <h1 class="username">Üdvözöljük<i><?php
+             if ($_SESSION["user"] === null) {
+              header("Location: login.php");
+              exit();
+             }
+             ?></i>!</h1>
             <h1 class="text-center">
               Rólunk
             </h1>
@@ -80,6 +85,5 @@ session_start();
         <footer class="container py-3 footer">
             Footer, lábjegyzet, jogi izék, bla bla bla
         </footer>
-        <script src="script.js"></script>
     </body>
 </html>
