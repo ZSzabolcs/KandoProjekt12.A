@@ -48,14 +48,17 @@ session_start();
           
           </nav>
         <div class="container flex-grow-1 min-vh-63 py-3">
-            <h1 class="username">Üdvözöljük<i><?php
+            <h1 class="username">Üdvözöljük <i><?php
              if ($_SESSION["user"] === null) {
               header("Location: login.php");
               exit();
              }
+             else {
+              echo $_SESSION["user"];
+             }
              ?></i>!</h1>
             <h1 class="text-center">
-              Rólunk
+              Rólunk 
             </h1>
             <p>
               Oldalunk azért jött létre, hogy a Magyarországon élő természetszerető emberek könnyebben megtalálják egymást, túrákat, barlangászást, szalonnasütést és egyéb programokat szervezzenek, tippeket, tanácsokat kérjenek és osszanak meg egymással, különböző látogatásra érdemes helyeket mutassanak be, fényképeket osszanak meg, és egy jól működő közösséget alkossanak.

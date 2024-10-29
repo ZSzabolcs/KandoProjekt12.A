@@ -1,35 +1,28 @@
-const blogok = document.getElementsByClassName("container blogbej my-2 py-2");
-let i = 0;
-while (i < blogok.length) {
-    let place = blogok[i].children[1];
+const blogs = document.getElementsByClassName("container blogbej my-2 py-2");
+
+for (let i = 0; i < blogs.length; i++) {
+    let place = blogs[i].childNodes[1];
     let txt_length = place.innerText.length;
     if (txt_length <= 454) {
-        blogok[i].removeChild(blogok[i].lastChild);
+        blogs[i].removeChild(blogs[i].lastChild);
 
     }
-    i++;
 }
 
-document.getElementsByTagName("button").addEventListener("click", function() {
-    let i = 0;
-    let van = false;
-    const blog = document.getElementsByClassName("container blogbej my-2 py-2");
-    const button = document.getElementsByTagName("button");
-    const container = document.getElementsByClassName("bevezeto");
-    console.log(blog)
-    console.log(button)
-    console.log(container)
-    console.log(container[i].lastChild)
-    let hely = 0;
-    while (!van && i < blog.length) {
-        if (container[i].lastChild.id === `more${i}`) {
-            hely = i;
-            van = true;
+for (let i = 0; i < blogs.length; i++) {
+
+    let button = blogs[i].querySelector(".more");
+    button.onclick = function () {
+        let isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", isExpanded);
+
+        if (!isExpanded) {
+            blogs[i].appendChild(button);
+            button.innerText = "Több";
         }
-        i++;
-    }
-    console.log(hely)
-    // A gomb áthelyezése a szülő elem végére
-    blog[hely].appendChild(button[hely]);
-    button[hely].innerText = "Kevesebb";
-});
+        else {
+            blogs[i].appendChild(button);
+            button.innerText = "Kevesebb";
+        }
+    };
+}
