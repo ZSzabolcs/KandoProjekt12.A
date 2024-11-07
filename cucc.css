@@ -1,0 +1,197 @@
+body{
+    background-color: rgb(245, 245, 245);
+}
+
+header{
+    background-image: url(kepek/1728229808390.jpg);
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(kepek/1728229808390.jpg);
+    background-size: cover;
+    filter: blur(5px);
+    z-index: 1;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Halvány fekete háttérréteg */
+    z-index: 2;
+}
+
+header h1{
+    padding-top: 50px;
+    position: relative;
+    z-index: 3; /* Szöveg a háttér előtt */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding-top: 50px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.navpad{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.min-vh-63 {
+    min-height: 63vh;
+    display: flex;
+    flex-direction: column;
+}
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.container{
+    background-color: white;
+    color: rgb(33, 41, 19);
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.container h1{
+    color: darkolivegreen;
+    padding-bottom: 15px;
+}
+
+.container h2{
+    color: darkolivegreen;
+    padding-bottom: 15px;
+}
+
+.container p {
+    text-indent: 35px;
+    text-align: justify;
+    font-size: larger;
+}
+
+.footer{
+    background-color: rgb(223, 221, 221);
+    color: black;
+    font-size: large;
+}
+
+.navbarcucc{
+    background-color: mediumseagreen;
+}
+
+.nav-link{
+    color: black;
+    font-size: large;
+}
+
+.nav-link:hover{
+    color: darkolivegreen;
+}
+
+b{
+    color: rgb(95, 146, 95);
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+.message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.form{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    font-size: larger;
+}
+#username{
+    margin-left: 5.5px;
+}
+
+#email{
+    margin-left: 53px;
+}
+
+#password{
+    margin-left: 84px;
+}
+
+#username1{
+    margin-left: 5.5px;
+}
+
+#email1{
+    margin-left: 53px;
+}
+
+#password1{
+    margin-left: 84px;
+}
+
+.submit{
+    background-color: rgb(169, 245, 169);
+}
+
+.blogbej{
+    background-color: rgb(239, 234, 234);
+    color: black;
+}
+
+.blogbejhatter{
+    background-color: rgb(245, 245, 245);
+}
+
+.more{
+    color: #155724;
+    font-size: larger;
+    float: right;
+}
+
+button{
+    border: none;
+    background: none;
+    padding: none;
+    margin: none;
+}
+
+.collapse{
+    padding-bottom: 5px;
+}
+
+.comment{
+    background-color: white;
+    color: black;
+    text-align: justify;
+}
+
+.commenter{
+    color: #155724;
+    font-size: larger;
+}
+
+.bejegyzes{
+    text-align: justify;
+}
