@@ -1,36 +1,28 @@
 <?php
 namespace Main;
+use PDOException;
+use PDO;
 final class DeveloperDB
 {
-    private string $servername;
-    private string $db_username;
-    private string $db_password;
-    private string $dbname;
+    private static string $servername;
+    private static string $db_username;
+    private static string $db_password;
+    private static string $db_name;
+    private static string $PDO_name = "sqlite:Blogger.db";
+    public const FETCH_ASSOC = PDO::FETCH_ASSOC;
+    public const PARAM_STR = PDO::PARAM_STR;
 
-
-    public function __construct($servername = "localhost", $db_username = "csiger", $db_password = "", $dbname = "phpdatabase")
+    public static function CallPDO()
     {
-        $this->servername = $servername;
-        $this->db_username = $db_username;
-        $this->db_password = $db_password;
-        $this->dbname = $dbname;
-    }
-
-    public function GetServerName()
-    {
-        return $this->servername;
-    }
-    public function GetDbUsername()
-    {
-        return $this->db_username;
-    }
-    public function GetDbPassword()
-    {
-        return $this->db_password;
-    }
-    public function GetDbName()
-    {
-        return $this->dbname;
+        try{
+        $db = new PDO(dsn: self::$PDO_name);
+        $db->exec('PRAGMA foreign_keys = ON;');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $db;
+        }catch(PDOException $e){
+            echo 'Nem létezik PDO adatbázis!';
+            exit();
+        }
     }
 }
 ?>

@@ -1,8 +1,8 @@
 <?php
 namespace Main;
-use PDO;
 use PDOException;
 include "Login_register_class.php";
+include "Developer_class.php";
 session_name('user');
 session_start();
 ?>
@@ -62,7 +62,7 @@ session_start();
                 <input type="text" id="username" name="username" required><br>
                 <label for="password">Jelszó:</label>
                 <input type="password" id="password" name="password" required><br>
-                <button type="submit" name="action" value="register" onclick="Regist()"
+                <button type="submit" onclick="Regist()"
                     class="submit my-4">Regisztráció</button>
             </form>
             <?php
@@ -70,9 +70,7 @@ session_start();
                 // Akkor indul el ha megnyomjuk a 'submit' gombot!
                 try {
                     // Kapcsolódás az adatbázishoz
-                    $db = new PDO('sqlite:Blogger.db');
-                    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+                    $db = DeveloperDB::CallPDO();
                     // Amikor beregisztrál!
                     $username = Login_Register::TestInput($_POST['username']);
                     $email = Login_Register::TestInput($_POST['email']);
@@ -83,10 +81,10 @@ session_start();
                     //Felhasználó ellenőrzése
                     $sql_check_username = "SELECT COUNT(*) as piece FROM user WHERE $u = :$u";
                     $stmt = $db->prepare($sql_check_username);
-                    $stmt->bindValue(":$u", $username, PDO::PARAM_STR);
+                    $stmt->bindValue(":$u", $username, DeveloperDB::PARAM_STR);
                     $stmt->execute();
 
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $row = $stmt->fetch(DeveloperDB::FETCH_ASSOC);
                     if ($row['piece'] > 0) {
                         // Ha a felhasználónév már létezik, hibaüzenetet jelenítünk meg
                         echo "A felhasználónév létezik!";
@@ -95,14 +93,14 @@ session_start();
                         // Ha a felhasználónév nem létezik, folytatjuk a regisztrációt
                         $sql_insert = "INSERT INTO user ($u, $e, $p) VALUES (:$u, :$e, :$p)";
                         $stmt = $db->prepare($sql_insert);
-                        $stmt->bindValue(":$u", $username, PDO::PARAM_STR);
-                        $stmt->bindValue(":$e", $email, PDO::PARAM_STR);
-                        $stmt->bindValue(":$p", $password, PDO::PARAM_STR);
+                        $stmt->bindValue(":$u", $username, DeveloperDB::PARAM_STR);
+                        $stmt->bindValue(":$e", $email, DeveloperDB::PARAM_STR);
+                        $stmt->bindValue(":$p", $password, DeveloperDB::PARAM_STR);
 
                         $success = $stmt->execute();
                         if ($success) {
                             $_SESSION['user'] = $username;
-                            $directory_name = "/kepek/" . $username . "/public";
+                            $directory_name = "/kepek/users/" . $username . "/public";
                             $current_path = getcwd();
                             $directory_path = realpath($current_path . DIRECTORY_SEPARATOR . $directory_name);
                             if ($directory_path === false) {
@@ -114,7 +112,7 @@ session_start();
                                     echo "Hiba a mappa létrehozásakor.";
                                 }
                             } else {
-                                echo "A felhasználó létezik!!!";
+                                echo "A felhasználó létezik!";
                             }
 
                         } else {

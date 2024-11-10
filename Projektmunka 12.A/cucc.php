@@ -41,7 +41,7 @@ session_start();
                     <a class="nav-link" href="#">Események</a>
                   </li>
                   <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Cikkek</a>
+                    <a class="nav-link" href="blogger_create.php">Cikkek</a>
                   </li>
               </ul>
             </div>

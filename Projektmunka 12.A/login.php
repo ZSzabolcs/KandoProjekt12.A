@@ -1,8 +1,8 @@
 <?php
 namespace Main;
-use PDO;
 use PDOException;
 include "Login_register_class.php";
+include "Developer_class.php";
 session_name('user');
 session_start();
 ?>
@@ -63,14 +63,13 @@ session_start();
         <input type="text" id="username1" name="username" required><br>
         <label for="password1">Jelszó:</label>
         <input type="password" id="password1" name="password" required><br>
-        <button type="submit" name="action" value="login" onclick="Login()" class="submit my-4">Bejelentkezés</button>
+        <button type="submit" onclick="Login()" class="submit my-4">Bejelentkezés</button>
       </form>
 
       <?php
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
-          $db = new PDO('sqlite:Blogger.db');
-          $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $db = DeveloperDB::CallPDO();
           $username = Login_register::TestInput($_POST['username']);
           $email = Login_register::TestInput($_POST['email']);
           $password = Login_register::TestInput($_POST['password']);
@@ -78,16 +77,15 @@ session_start();
 
           $sql_finding = "SELECT password FROM user WHERE $u = :$u AND $e = :$e";
           $stmt = $db->prepare($sql_finding);
-          $stmt->bindValue(":$u", $username, PDO::PARAM_STR);
-          $stmt->bindValue(":$e", $email, PDO::PARAM_STR);
+          $stmt->bindValue(":$u", $username, DeveloperDB::PARAM_STR);
+          $stmt->bindValue(":$e", $email, DeveloperDB::PARAM_STR);
           $stmt->execute();
 
-          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          $row = $stmt->fetch(DeveloperDB::FETCH_ASSOC);
           if ($row) {
             $hashed_password = $row[$p];
 
             if (password_verify($password, $hashed_password)) {
-              echo "Bejelentkezés sikeres!";
               $_SESSION['user'] = $username;
               Login_register::ToAnotherPage('cucc.php');
             } else {

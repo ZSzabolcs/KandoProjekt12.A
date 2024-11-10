@@ -1,8 +1,8 @@
 <?php
 namespace Main;
-use PDO;
 use PDOException;
 include "Login_register_class.php";
+include "Developer_class.php";
 session_name("user");
 session_start();
 ?>
@@ -55,14 +55,13 @@ session_start();
     <?php
     try {
         $num = 0;
-        $db = new PDO("sqlite:Blogger.db");
-        $db->exec('PRAGMA foreign_keys = ON;');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db = DeveloperDB::CallPDO();
         $stmt = $db->prepare("SELECT * FROM blog");
         $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $posts = $stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
     } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        echo "Kapcsolati hiba: " . $e->getMessage();
+        
     }
     ?>
     <div class="container flex-grow-1 min-vh-63 py-3 blogbejhatter">
@@ -71,6 +70,7 @@ session_start();
             foreach ($posts as $post) {
                 echo '<div class="container blogbej my-2 py-2">';
                 echo '<h3>' . htmlspecialchars($post["blog_title"]) . '</h3>';
+                echo '<div class="commenter">Írta: '.$post["blog_username"].'</div>';
                 echo '<div class="bevezeto">' . substr(htmlspecialchars($post["blog_content"]), 0, 470); // Rövidített szöveg
                 echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post["blog_id"] . '" class="more" id="more' . $num . '">Több</button></div>';
 
@@ -80,7 +80,7 @@ session_start();
                 // Kommentek lekérdezése a blogbejegyzéshez
                 $comment_stmt = $db->prepare("SELECT * FROM comment WHERE comment_id = :post_id");
                 $comment_stmt->execute(['post_id' => $post["blog_id"]]);
-                $comments = $comment_stmt->fetchAll(PDO::FETCH_ASSOC);
+                $comments = $comment_stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
 
                 echo '<div class="collapse container" id="content' . $post["blog_id"] . '">';
                 if (!empty($comments)) {
