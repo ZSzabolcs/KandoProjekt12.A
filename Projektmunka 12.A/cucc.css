@@ -184,9 +184,14 @@ button{
 .comment{
     background-color: white;
     color: black;
+    text-align: justify;
 }
 
 .commenter{
     color: #155724;
     font-size: larger;
+}
+
+.bejegyzes{
+    text-align: justify;
 }
