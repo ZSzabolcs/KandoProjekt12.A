@@ -98,7 +98,6 @@ session_start();
                     echo "<p>Nincsenek kommentek.</p>";
                 }
                 echo '</div>';
-                echo strlen($reszlet);
             }
         } else {
             echo "<p>Nincsenek blogbejegyzések.</p>";
