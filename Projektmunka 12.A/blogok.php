@@ -15,8 +15,7 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="cucc.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="blog.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <title>Cucc</title>
 </head>
 
@@ -54,9 +53,12 @@ session_start();
     </nav>
     <?php
     try {
+        $complete_blogs_texts = [];
+        $chlimit = 411;
+        $diff = 11;
         $num = 0;
         $db = DeveloperDB::CallPDO();
-        $stmt = $db->prepare("SELECT * FROM blog");
+        $stmt = $db->prepare("SELECT * FROM blog LIMIT 10");
         $stmt->execute();
         $posts = $stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -71,10 +73,13 @@ session_start();
                 echo '<div class="container blogbej my-2 py-2">';
                 echo '<h3>' . htmlspecialchars($post["blog_title"]) . '</h3>';
                 echo '<div class="commenter">Írta: '.$post["blog_username"].'</div>';
-                echo '<div class="bevezeto">' . substr(htmlspecialchars($post["blog_content"]), 0, 470); // Rövidített szöveg
+                echo '<div class="bevezeto">' . substr(htmlspecialchars($post["blog_content"]), 0, $chlimit); // Rövidített szöveg
                 echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post["blog_id"] . '" class="more" id="more' . $num . '">Több</button></div>';
-
-                echo '<div id="content' . $post["blog_id"] . '" class="collapse">' . htmlspecialchars($post["blog_content"]) . '</div>';
+                $blog_text = strlen($post["blog_content"]);
+                $maradek = $blog_text-$chlimit;
+                echo '<div id="content' . $post["blog_id"] . '" class="collapse">' . substr(htmlspecialchars($post["blog_content"]), $chlimit, $maradek) . '</div>';
+                $blog_text -= $diff;
+                $complete_blogs_texts[$num] = $blog_text;
                 echo '</div>';
                 $num++;
                 // Kommentek lekérdezése a blogbejegyzéshez
@@ -103,6 +108,46 @@ session_start();
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
+    <script>
+    const blogs = document.getElementsByClassName("container blogbej my-2 py-2");
+
+for (let i = 0; i < blogs.length; i++) {
+    for (let j = 0; j < blogs[i].childElementCount; j++) {
+        let tag = blogs[i].childNodes[j];
+        if (tag.className === "bevezeto") {
+            let bev_length = tag.innerText.length;
+            console.log(bev_length)
+            if (bev_length <= <?php echo $chlimit-$diff;?> && <?php for ($i=0; $i < count($complete_blogs_texts); $i++) { 
+                echo $complete_blogs_texts[$i]; 
+            }?> <= <?php echo $chlimit-$diff;?>) {
+                blogs[i].removeChild(blogs[i].lastChild);
+
+            }
+        }
+        
+        
+    }
+
+}
+
+for (let i = 0; i < blogs.length; i++) {
+
+    let button = blogs[i].querySelector(".more");
+    button.onclick = function () {
+        let isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", isExpanded);
+
+        if (!isExpanded) {
+            blogs[i].appendChild(button);
+            button.innerText = "Több";
+        }
+        else {
+            blogs[i].appendChild(button);
+            button.innerText = "Kevesebb";
+        }
+    };
+}
+</script>
 </body>
 
 </html>
