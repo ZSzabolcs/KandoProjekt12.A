@@ -55,7 +55,6 @@ session_start();
     try {
         $complete_blogs_texts = [];
         $chlimit = 411;
-        $diff = 11;
         $num = 0;
         $db = DeveloperDB::CallPDO();
         $stmt = $db->prepare("SELECT * FROM blog LIMIT 10");
@@ -63,7 +62,7 @@ session_start();
         $posts = $stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Kapcsolati hiba: " . $e->getMessage();
-        
+
     }
     ?>
     <div class="container flex-grow-1 min-vh-63 py-3 blogbejhatter">
@@ -72,13 +71,13 @@ session_start();
             foreach ($posts as $post) {
                 echo '<div class="container blogbej my-2 py-2">';
                 echo '<h3>' . htmlspecialchars($post["blog_title"]) . '</h3>';
-                echo '<div class="commenter">Írta: '.$post["blog_username"].'</div>';
-                echo '<div class="bevezeto">' . substr(htmlspecialchars($post["blog_content"]), 0, $chlimit); // Rövidített szöveg
-                echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post["blog_id"] . '" class="more" id="more' . $num . '">Több</button></div>';
+                echo '<div class="commenter">Írta: ' . $post["blog_username"] . '</div>';
+                $reszlet = substr(htmlspecialchars($post["blog_content"]), 0, $chlimit);
+                echo '<div class="bevezeto">' . $reszlet . '</div>'; // Rövidített szöveg
+                echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post["blog_id"] . '" class="more" id="more' . $num . '">Több</button>';
                 $blog_text = strlen($post["blog_content"]);
-                $maradek = $blog_text-$chlimit;
+                $maradek = $blog_text - $chlimit;
                 echo '<div id="content' . $post["blog_id"] . '" class="collapse">' . substr(htmlspecialchars($post["blog_content"]), $chlimit, $maradek) . '</div>';
-                $blog_text -= $diff;
                 $complete_blogs_texts[$num] = $blog_text;
                 echo '</div>';
                 $num++;
@@ -99,55 +98,48 @@ session_start();
                     echo "<p>Nincsenek kommentek.</p>";
                 }
                 echo '</div>';
+                echo strlen($reszlet);
             }
         } else {
             echo "<p>Nincsenek blogbejegyzések.</p>";
         }
+
         ?>
     </div>
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
     <script>
-    const blogs = document.getElementsByClassName("container blogbej my-2 py-2");
+        const blogs = document.getElementsByClassName("container blogbej my-2 py-2");
 
-for (let i = 0; i < blogs.length; i++) {
-    for (let j = 0; j < blogs[i].childElementCount; j++) {
-        let tag = blogs[i].childNodes[j];
-        if (tag.className === "bevezeto") {
-            let bev_length = tag.innerText.length;
-            console.log(bev_length)
-            if (bev_length <= <?php echo $chlimit-$diff;?> && <?php for ($i=0; $i < count($complete_blogs_texts); $i++) { 
-                echo $complete_blogs_texts[$i]; 
-            }?> <= <?php echo $chlimit-$diff;?>) {
+        for (let i = 0; i < blogs.length; i++) {
+            if (<?php for ($i = 0; $i < count($complete_blogs_texts); $i++) {
+                echo $complete_blogs_texts[$i];
+            } ?> <= <?php echo $chlimit; ?>) {
                 blogs[i].removeChild(blogs[i].lastChild);
 
             }
         }
-        
-        
-    }
 
-}
 
-for (let i = 0; i < blogs.length; i++) {
+        for (let i = 0; i < blogs.length; i++) {
 
-    let button = blogs[i].querySelector(".more");
-    button.onclick = function () {
-        let isExpanded = this.getAttribute("aria-expanded") === "true";
-        this.setAttribute("aria-expanded", isExpanded);
+            let button = blogs[i].querySelector(".more");
+            button.onclick = function () {
+                let isExpanded = this.getAttribute("aria-expanded") === "true";
+                this.setAttribute("aria-expanded", isExpanded);
 
-        if (!isExpanded) {
-            blogs[i].appendChild(button);
-            button.innerText = "Több";
+                if (!isExpanded) {
+                    blogs[i].appendChild(button);
+                    button.innerText = "Több";
+                }
+                else {
+                    blogs[i].appendChild(button);
+                    button.innerText = "Kevesebb";
+                }
+            };
         }
-        else {
-            blogs[i].appendChild(button);
-            button.innerText = "Kevesebb";
-        }
-    };
-}
-</script>
+    </script>
 </body>
 
 </html>
