@@ -10,11 +10,7 @@ session_start();
 <html lang="hu">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="cucc.css">
+    <?php include "head.html" ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <title>Cucc</title>
 </head>
@@ -40,7 +36,7 @@ session_start();
                     <a class="nav-link" href="#">Közösségi tér</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Üzenetek</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php"); ?>">Üzenetek</a>
                 </li>
                 <li class="nav-item navpad">
                     <a class="nav-link" href="#">Események</a>
@@ -77,7 +73,7 @@ session_start();
                 echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post["blog_id"] . '" class="more" id="more' . $num . '">Több</button>';
                 $blog_text = strlen($post["blog_content"]);
                 $maradek = $blog_text - $chlimit;
-                echo '<div id="content' . $post["blog_id"] . '" class="collapse">' . substr(htmlspecialchars($post["blog_content"]), $chlimit, $maradek) . '</div>';
+                echo '<div id="content' . $post["blog_id"] . '" class="collapse">' . substr(htmlspecialchars($post["blog_content"]), $chlimit, abs($maradek)) . '</div>';
                 $complete_blogs_texts[$num] = $blog_text;
                 echo '</div>';
                 $num++;
@@ -109,6 +105,7 @@ session_start();
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
     <script>
+        
         const blogs = document.getElementsByClassName("container blogbej my-2 py-2");
 
         for (let i = 0; i < blogs.length; i++) {
@@ -138,6 +135,7 @@ session_start();
                 }
             };
         }
+            
     </script>
 </body>
 
