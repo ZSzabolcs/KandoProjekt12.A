@@ -30,7 +30,7 @@ session_start();
                   <a class="nav-link" href="#">Felhasználói fiók</a>
                 </li>
                 <li class="nav-item navpad">
-                  <a class="nav-link" href="#">Közösségi tér</a>
+                  <a class="nav-link" href="chatszobak.php">Közösségi tér</a>
                 </li>
                 <li class="nav-item navpad">
                     <a class="nav-link" href="#">Üzenetek</a>

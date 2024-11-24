@@ -11,7 +11,7 @@ session_start();
 
 <head>
     <?php include "head.html" ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>Cucc</title>
 </head>
 
@@ -69,7 +69,7 @@ session_start();
                 echo '<h3>' . htmlspecialchars($post["blog_title"]) . '</h3>';
                 echo '<div class="commenter">Írta: ' . $post["blog_username"] . '</div>';
                 $reszlet = substr(htmlspecialchars($post["blog_content"]), 0, $chlimit);
-                echo '<div class="bevezeto">' . $reszlet . '</div>'; // Rövidített szöveg
+                echo '<div class="bevezeto">' . $reszlet . '</div>';
                 echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post["blog_id"] . '" class="more" id="more' . $num . '">Több</button>';
                 $blog_text = strlen($post["blog_content"]);
                 $maradek = $blog_text - $chlimit;

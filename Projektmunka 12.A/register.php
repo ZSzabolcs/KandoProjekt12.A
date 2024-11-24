@@ -67,9 +67,7 @@ session_start();
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Akkor indul el ha megnyomjuk a 'submit' gombot!
                 try {
-                    // Kapcsolódás az adatbázishoz
                     $db = DeveloperDB::CallPDO();
-                    // Amikor beregisztrál!
                     $username = Login_Register::TestInput($_POST['username']);
                     $email = Login_Register::TestInput($_POST['email']);
                     $password = Login_Register::TestInput($_POST['password']);
@@ -87,8 +85,6 @@ session_start();
                         // Ha a felhasználónév már létezik, hibaüzenetet jelenítünk meg
                         echo "A felhasználónév létezik!";
                     } else {
-
-                        // Ha a felhasználónév nem létezik, folytatjuk a regisztrációt
                         $sql_insert = "INSERT INTO user ($u, $e, $p) VALUES (:$u, :$e, :$p)";
                         $stmt = $db->prepare($sql_insert);
                         $stmt->bindValue(":$u", $username, DeveloperDB::PARAM_STR);
@@ -98,6 +94,13 @@ session_start();
                         $success = $stmt->execute();
                         if ($success) {
                             $_SESSION['user'] = $username;
+                            $sql_create_table = 'CREATE TABLE IF NOT EXISTS '.$username.'___chats_page  (
+                            "chat_ser_num" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            "message_date" DATE NOT NULL,
+                            "message_text" TEXT NOT NULL,
+                            )';
+                            $stmt = $db->prepare($sql_create_table);
+                            $stmt->execute();
                             $directory_name = "/kepek/users/" . $username . "/public";
                             $current_path = getcwd();
                             $directory_path = realpath($current_path . DIRECTORY_SEPARATOR . $directory_name);

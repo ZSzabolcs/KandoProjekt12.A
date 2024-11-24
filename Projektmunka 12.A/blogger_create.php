@@ -1,8 +1,8 @@
 <?php
 namespace Main;
-use PDO;
 use PDOException;
 include "Login_register_class.php";
+include "Developer_class.php";
 session_name('user');
 session_start();
 ?>
@@ -98,9 +98,7 @@ session_start();
         $blog_title = "Most komolyan!!";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
-            $db = new PDO('sqlite:Blogger.db');
-            $db->exec('PRAGMA foreign_keys = ON;');
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db = DeveloperDB::CallPDO();
             $blog_content = Login_register::TestInput($_POST["content"]);
             $decoded_content = html_entity_decode($blog_content);
             $u = "blog_username"; $bt = "blog_title"; $bc = "blog_content"; $bm = "blog_made_date";
@@ -109,20 +107,20 @@ session_start();
 
             $sql_check_blog_title = "SELECT COUNT(*) as piece FROM blog WHERE $bt = :$bt";
             $stmt = $db->prepare($sql_check_blog_title);
-            $stmt->bindValue(":$bt", $blog_title, PDO::PARAM_STR);
+            $stmt->bindValue(":$bt", $blog_title, DeveloperDB::PARAM_STR);
             $stmt->execute();
             
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $row = $stmt->fetch(DeveloperDB::FETCH_ASSOC);
             if ($row["piece"] > 0){
                 echo "A blog cím létezik!";
             }
             else{
             $sql_insert = "INSERT INTO blog ($u, $bt, $bc, $bm) VALUES (:$u, :$bt, :$bc, :$bm)";
             $stmt = $db->prepare($sql_insert);
-            $stmt->bindValue(":$u", $username, PDO::PARAM_STR);
-            $stmt->bindValue(":$bt", $blog_title, PDO::PARAM_STR);
-            $stmt->bindValue(":$bc", $decoded_content, PDO::PARAM_STR);
-            $stmt->bindValue(":$bm", $now, PDO::PARAM_STR);
+            $stmt->bindValue(":$u", $username, type: DeveloperDB::PARAM_STR);
+            $stmt->bindValue(":$bt", $blog_title, DeveloperDB::PARAM_STR);
+            $stmt->bindValue(":$bc", $decoded_content, DeveloperDB::PARAM_STR);
+            $stmt->bindValue(":$bm", $now, DeveloperDB::PARAM_STR);
 
             $success = $stmt->execute();
                 if ($success) {

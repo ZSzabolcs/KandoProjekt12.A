@@ -36,27 +36,4 @@ REFERENCES blog(blog_title)
 
 
 
-/*Chat előretervezett felépítése*/
-/*
-CREATE TABLE IF NOT EXISTS `blogger`.`group_name` (
-id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-username VARCHAR(30) NOT NULL,
-message_text TEXT NOT NULL,
-message_date TIMESTAMP NOT NULL,
-CONSTRAINT FK_group_member FOREIGN KEY (username)
-REFERENCES group_member(username)
-)
-ENGINE = InnoDB;
-
-
-CREATE TABLE IF NOT EXISTS `blogger`.`group_member` (
-id INT AUTO_INCREMENT PRIMARY KEY,
-username VARCHAR(30) NOT NULL UNIQUE,
-CONSTRAINT FK_member_username FOREIGN KEY (username)
-REFERENCES user(username)
-)
-ENGINE = InnoDB;
-*/
-
-
 
