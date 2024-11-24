@@ -44,13 +44,13 @@ session_start();
         }
         else if(!empty($messages)){
          foreach ($messages as $message) {
-            echo $message;
+            echo $message["message_text"];
             echo "<br>";
          }
         }
         else {
-         $message = "Nincsen üzenet! Írjál egyet!";
-         echo $message;
+         echo "Nincsen üzenet! Írjál egyet!";
+         
         }
         
 
