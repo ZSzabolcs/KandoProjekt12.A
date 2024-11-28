@@ -58,7 +58,7 @@ session_start();
               $_SESSION['user'] = $username;
               Login_register::ToAnotherPage('cucc.php');
             } else {
-              echo "A jelszó helytelen!";
+              echo "A jelszó, vagy más adat helytelen!";
             }
           } else {
             echo "Nincs ilyen felhasználó!";
