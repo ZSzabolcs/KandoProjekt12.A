@@ -66,19 +66,24 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                 $bc = "blog_content";
                 $bu = "blog_username";
                 $bi = "blog_id";
-                echo '<div class="container blogbej my-2 py-2">';
-                echo '<h3>' . htmlspecialchars($post[$bt]) . '</h3>';
-                echo '<div class="commenter">Írta: ' . $post[$bu] . '</div>';
                 $reszlet = substr(htmlspecialchars($post[$bc]), 0, $chlimit);
-                echo '<div class="bevezeto">' . $reszlet . '</div>';
-                echo '<button data-bs-toggle="collapse" data-bs-target="#content' . $post[$bi] . '" class="more" id="more' . $num . '">Több</button>';
                 $blog_text_length = strlen($post[$bc]);
                 $maradek = $blog_text_length - $chlimit;
-                echo '<div id="content' . $post[$bi] . '" class="collapse">' . substr(htmlspecialchars($post[$bc]), $chlimit, abs($maradek)) . '</div>';
-                $blogs_info[$num][0] = $blog_text_length;
-                $blogs_info[$num][1] = $post[$bt];
-                echo '</div>';
-
+                $mar_text = substr(htmlspecialchars($post[$bc]), $chlimit, abs($maradek));
+                echo '<div class="container blogbej my-2 py-2">
+                <div class="commenter">'.
+                    $post[$bu]
+                .'</div>
+                <div class="p-3 bejegyzes">
+                    <div>'.$reszlet
+                        .'<button data-bs-toggle="collapse" id="content" data-bs-target="#content'.$post[$bi].'" class="more" id="more'.$num.'">Több</button></div>
+                    <div id="content'.$post[$bi].'" class="test collapse">'.
+                        $mar_text
+                    .'</div>
+                </div>
+            </div>';
+            $blogs_info[$num][0] = $blog_text_length;
+            $blogs_info[$num][1] = $post[$bt];
                 // Kommentek lekérdezése a blogbejegyzéshez
                 $comment_stmt = $db->prepare("SELECT * FROM comment");
                 $comment_stmt->execute();
