@@ -2,10 +2,11 @@
 namespace Main;
 use PDOException;
 use PDO;
+
 final class DeveloperDB
 {
-    private static  $servername;
-    private static  $db_username;
+    private static $servername;
+    private static $db_username;
     private static $db_password;
     private static $db_name;
     private static $PDO_name = "sqlite:Blogger.db";
@@ -14,15 +15,14 @@ final class DeveloperDB
 
     public static function CallPDO()
     {
-        try{
-        $db = new PDO(self::$PDO_name);
-        $db->exec('PRAGMA foreign_keys = ON;');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $db;
-        }catch(PDOException $e){
+        try {
+            $db = new PDO(self::$PDO_name);
+            $db->exec('PRAGMA foreign_keys = ON;');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $db;
+        } catch (PDOException $e) {
             echo 'Nem létezik PDO adatbázis!';
             exit();
         }
     }
 }
-?>

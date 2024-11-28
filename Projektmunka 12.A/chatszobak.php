@@ -1,11 +1,10 @@
 <?php
 namespace Main;
-use PDOException;
-use PDO;
 include "Developer_class.php";
 include "Login_register_class.php";
 session_name("user");
 session_start();
+if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
 ?>
 
 <!DOCTYPE html>
@@ -18,31 +17,11 @@ session_start();
 
 
    <?php
-   try {
       $db = DeveloperDB::CallPDO();
       $stmt = $db->prepare('SELECT * FROM '.$_SESSION["user"].'___chats_page');
       $stmt->execute();
       $messages = $stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
-
-
-   } catch (PDOException $e)
-    { 
-      echo 'Kapcsolati Hiba: '.$e->getMessage();
-    }
-   
-        if(!empty($_POST["message"])){
-           $db = DeveloperDB::CallPDO();
-           $message = Login_register::TestInput($_POST["message"]);
-           $now = date("Y-m-d");
-           $d = "message_date"; $t = "message_text";
-           $sql_insert_text = 'INSERT INTO '.$_SESSION["user"].'___chats_page ('.$d.', '.$t.') VALUES (:'.$d.', :'.$t.')';
-           $stmt = $db->prepare($sql_insert_text);
-           $stmt->bindValue(":$d", $now, DeveloperDB::PARAM_STR);
-           $stmt->bindValue(":$t", $message, DeveloperDB::PARAM_STR);
-           $stmt->execute();
-           $db = null;
-        }
-        else if(!empty($messages)){
+      if(!empty($messages)){
          foreach ($messages as $message) {
             echo $message["message_text"];
             echo "<br>";
@@ -51,6 +30,19 @@ session_start();
         else {
          echo "Nincsen üzenet! Írjál egyet!";
          
+        }
+   
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+           $db = DeveloperDB::CallPDO();
+           $message = Login_register::TestInput($_POST["message"]);
+           $now = date("Y-m-d H:i");
+           $d = "message_date"; $t = "message_text";
+           $sql_insert_text = 'INSERT INTO '.$_SESSION["user"].'___chats_page ('.$d.', '.$t.') VALUES (:'.$d.', :'.$t.')';
+           $stmt = $db->prepare($sql_insert_text);
+           $stmt->bindValue(":$d", $now, DeveloperDB::PARAM_STR);
+           $stmt->bindValue(":$t", $message, DeveloperDB::PARAM_STR);
+           $stmt->execute();
+           $db = null;
         }
         
 

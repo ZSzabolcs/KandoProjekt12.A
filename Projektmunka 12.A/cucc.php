@@ -7,9 +7,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="hu">
     <head>
-        <?php
-          include "head.html";
-        ?>
+        <?php include "head.html"; ?>
         <title>Cucc</title>
     </head>
     <body>
@@ -19,27 +17,25 @@ session_start();
             </h1>
         </header>
         <nav class="navbar navbar-expand-lg navbarcucc">
-
             <div class="container-fluid justify-content-center">
-              <!-- Links -->
               <ul class="navbar-nav">
                 <li class="nav-item navpad">
                   <a class="nav-link" href="#">Kezdőlap</a>
                 </li>
                 <li class="nav-item navpad">
-                  <a class="nav-link" href="#">Felhasználói fiók</a>
+                  <a class="nav-link" href="#">Blogok</a>
                 </li>
                 <li class="nav-item navpad">
-                  <a class="nav-link" href="chatszobak.php">Közösségi tér</a>
+                  <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php");  ?>">Chat szobák</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Üzenetek</a>
+                    <a class="nav-link" href="">Üzenetek</a>
                   </li>
                   <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Események</a>
+                    <a class="nav-link" href="">Események</a>
                   </li>
                   <li class="nav-item navpad">
-                    <a class="nav-link" href="blogger_create.php">Cikkek</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogok.php"); ?>">Blogok</a>
                   </li>
               </ul>
             </div>
@@ -48,8 +44,7 @@ session_start();
         <div class="container flex-grow-1 min-vh-63 py-3">
             <h1 class="username">Üdvözöljük <i><?php
              if ($_SESSION["user"] === null) {
-              header("Location: login.php");
-              exit();
+              Login_register::ToAnotherPage("login.php");
              }
              else {
               echo $_SESSION["user"];

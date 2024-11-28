@@ -1,6 +1,5 @@
 <?php
 namespace Main;
-use PDOException;
 include "Login_register_class.php";
 include "Developer_class.php";
 session_name("user");
@@ -21,32 +20,7 @@ session_start();
       Magyar földeken
     </h1>
   </header>
-  <nav class="navbar navbar-expand-lg navbarcucc">
-
-    <div class="container-fluid justify-content-center">
-      <!-- Links -->
-      <ul class="navbar-nav">
-        <li class="nav-item navpad">
-          <a class="nav-link" href="#">Kezdőlap</a>
-        </li>
-        <li class="nav-item navpad">
-          <a class="nav-link" href="#">Felhasználói fiók</a>
-        </li>
-        <li class="nav-item navpad">
-          <a class="nav-link" href="#">Közösségi tér</a>
-        </li>
-        <li class="nav-item navpad">
-          <a class="nav-link" href="#">Üzenetek</a>
-        </li>
-        <li class="nav-item navpad">
-          <a class="nav-link" href="#">Események</a>
-        </li>
-        <li class="nav-item navpad">
-          <a class="nav-link" href="#">Cikkek</a>
-        </li>
-      </ul>
-    </div>
-
+  <nav class="navbar navbar-expand-lg navbarcucc" >
   </nav>
   <div class="container flex-grow-1 min-vh-63 py-3">
     <h1 class="text-center">Bejelentkezés</h1>
@@ -64,7 +38,6 @@ session_start();
 
       <?php
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        try {
           $db = DeveloperDB::CallPDO();
           $username = Login_register::TestInput($_POST['username']);
           $email = Login_register::TestInput($_POST['email']);
@@ -90,10 +63,7 @@ session_start();
           } else {
             echo "Nincs ilyen felhasználó!";
           }
-
-        } catch (PDOException $e) {
-          echo 'Hiba történt ' . $e->getMessage();
-        }
+          
         $db = null;
       }
       ?>

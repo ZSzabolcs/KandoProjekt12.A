@@ -24,5 +24,6 @@ final class Login_register{
     header("Location: $web_name");
     exit();
    }
+   
 }
 ?>
