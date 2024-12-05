@@ -39,7 +39,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                     <a class="nav-link" href="#">Események</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="<?php echo htmlspecialchars("blogok.php"); ?>">Blogok</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogger_create.php"); ?>">Blog készítő</a>
                 </li>
             </ul>
         </div>
@@ -58,21 +58,15 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
         <?php
         if (!empty($posts)) {
             foreach ($posts as $post) {
-                $cu = "comment_username";
-                $tt = "target_title";
-                $cc = "comment_content";
-                $cd = "comment_date";
-                $bt = "blog_title";
-                $bc = "blog_content";
-                $bu = "blog_username";
-                $bi = "blog_id";
+                $cu = "comment_username";  $tt = "target_title";  $cc = "comment_content";   $cd = "comment_date"; $ci = "comment_id";
+                $bt = "blog_title";   $bc = "blog_content";   $bu = "blog_username";   $bi = "blog_id";  $bd = "blog_made_date";
                 $reszlet = substr(htmlspecialchars($post[$bc]), 0, $chlimit);
                 $blog_text_length = strlen($post[$bc]);
                 $maradek = $blog_text_length - $chlimit;
                 $mar_text = substr(htmlspecialchars($post[$bc]), $chlimit, abs($maradek));
                 echo '<div class="container blogbej my-2 py-2">
                 <div class="commenter">'.
-                    $post[$bu]
+                    $post[$bu].' <br>dátum: '.$post[$bd]
                 .'</div>
                 <div class="p-3 bejegyzes">
                     <div>'.$reszlet
@@ -83,7 +77,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                 </div>
             </div>';
             $blogs_info[$num][0] = $blog_text_length;
-            $blogs_info[$num][1] = $post[$bt];
+            $blogs_info[$num][1] = $post[$bi];
                 // Kommentek lekérdezése a blogbejegyzéshez
                 $comment_stmt = $db->prepare("SELECT * FROM comment");
                 $comment_stmt->execute();
@@ -92,7 +86,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                 echo '<div class="collapse container" id="content' . $post[$bi] . '">';
                 if (!empty($comments)) {
                     foreach ($comments as $comment) {
-                        if ($post[$bt] === $comment[$tt]) {
+                        if ($post[$bi] === $comment[$ci]) {
                             echo '<div class="comment">';
                             echo '<span class="commenter">' . htmlspecialchars($comment[$cu]) . ':</span><span> ' . htmlspecialchars($comment[$cd]) . '</span><br>';
                             echo '<div class="p-3">' . htmlspecialchars($comment[$cc]) . '</div>';

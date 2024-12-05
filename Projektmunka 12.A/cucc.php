@@ -20,16 +20,10 @@ session_start();
             <div class="container-fluid justify-content-center">
               <ul class="navbar-nav">
                 <li class="nav-item navpad">
-                  <a class="nav-link" href="#">Kezdőlap</a>
-                </li>
-                <li class="nav-item navpad">
-                  <a class="nav-link" href="#">Blogok</a>
-                </li>
-                <li class="nav-item navpad">
                   <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php");  ?>">Chat szobák</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="">Üzenetek</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogger_create.php"); ?>">Blog készítő</a>
                   </li>
                   <li class="nav-item navpad">
                     <a class="nav-link" href="">Események</a>
