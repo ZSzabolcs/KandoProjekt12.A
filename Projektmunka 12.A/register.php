@@ -67,8 +67,11 @@ session_start();
                         $_SESSION['user'] = $username;
                         $sql_create_table = 'CREATE TABLE IF NOT EXISTS ' . $username . '___chats_page  (
                             "chat_ser_num" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            "from_who" VARCHAR(30) NOT NULL,
                             "message_text" TEXT NOT NULL,
-                            "message_date" DATE NOT NULL
+                            "message_date" DATE NOT NULL,
+                            CONSTRAINT FK_'.$username.'_page FOREIGN KEY ("from_who")
+                            REFERENCES user(username)
                             )';
                         $stmt = $db->prepare($sql_create_table);
                         $stmt->execute();
