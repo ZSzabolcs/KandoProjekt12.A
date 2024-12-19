@@ -27,19 +27,10 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                     <a class="nav-link" href="<?php echo htmlspecialchars("cucc.php"); ?>">Kezdőlap</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Felhasználói fiók</a>
-                </li>
-                <li class="nav-item navpad">
                     <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php"); ?>">Közösségi tér</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Üzenetek</a>
-                </li>
-                <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Események</a>
-                </li>
-                <li class="nav-item navpad">
-                    <a class="nav-link" href="<?php echo htmlspecialchars("blogger_create.php"); ?>">Blog készítő</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogger_create.php"); ?>">Blog készítő felület</a>
                 </li>
             </ul>
         </div>
@@ -66,8 +57,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                 $mar_text = substr(htmlspecialchars($post[$bc]), $chlimit, abs($maradek));
                 echo '<div class="container blogbej my-2 py-2">
                 <div class="commenter">'.
-                    $post[$bu].' <br>dátum: '.$post[$bd]
-                .'</div>
+                    $post[$bu].' <br>dátum: '.$post[$bd].' <br> Cím: '.$post[$bt].'</div>
                 <div class="p-3 bejegyzes">
                     <div>'.$reszlet
                         .'<button data-bs-toggle="collapse" id="content" data-bs-target="#content'.$post[$bi].'" class="more" id="more'.$num.'">Több</button></div>
@@ -108,6 +98,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
         } else {
             echo "<p>Nincsenek blogbejegyzések.</p>";
         }
+        $db = null;
 
         if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST["comment_text"])) {
             $cu = "comment_username";
@@ -117,14 +108,16 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
             $db = DeveloperDB::CallPDO();
             $now = date("Y-m-d H:i");
             $commenter = $_SESSION["user"];
+            $comment_content = $_POST["comment_text"];
             $blog_title = $blogs_info[$_POST["post_id"]][1];
+            echo $blog_title;
             $stmt = $db->prepare("INSERT INTO comment ($cu, $tt, $cc, $cd) VALUES (:$cu, :$tt, :$cc, :$cd)");
             $stmt->bindValue(":$cu", $commenter, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$tt", $blog_title, DeveloperDB::PARAM_STR);
-            $stmt->bindValue(":$cc", $_POST["comment_text"], DeveloperDB::PARAM_STR);
+            $stmt->bindValue(":$cc", $comment_content, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$cd", $now, DeveloperDB::PARAM_STR);
             $stmt->execute();
-            echo '<meta http-equiv="refresh" content="5">';
+            echo '<meta http-equiv="refresh" content="0.5">';
         }
 
         $db = null;
@@ -155,12 +148,12 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
 
                 if (!isExpanded) {
                     blogs[i].appendChild(button);
-                    button.innerText = "Több";
+                    this.innerText = "Több";
                 } else {
                     blogs[i].appendChild(button);
-                    button.innerText = "Kevesebb";
+                    this.innerText = "Kevesebb";
                 }
-            };
+            }
         }
     </script>
 </body>

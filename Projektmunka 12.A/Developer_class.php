@@ -22,7 +22,6 @@ final class DeveloperDB
             return $db;
         } catch (PDOException $e) {
             echo 'Nem létezik PDO adatbázis!';
-            exit();
         }
     }
 }

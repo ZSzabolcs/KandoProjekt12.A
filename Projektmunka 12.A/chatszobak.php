@@ -14,11 +14,11 @@ if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
     <title>Chatszobád</title>
 </head>
 <body>
-
+   <h1><?php echo$_SESSION["user"] ?></h1>
 
    <?php
       $db = DeveloperDB::CallPDO();
-      $stmt = $db->prepare('SELECT * FROM '.$_SESSION["user"].'___chats_page');
+      $stmt = $db->prepare('SELECT * FROM '.$_SESSION["user"].'__chats_page');
       $stmt->execute();
       $messages = $stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
       if(!empty($messages)){
@@ -30,6 +30,7 @@ if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
             else{
                echo '<p>'.$message["from_who"].'</p><br><div style="background-color: gray; color: white; float: left;">'.$message["message_text"].'</div>';
                echo "<br>";
+               echo '<meta http-equiv="refresh" content="0.5">';
             }
 
          }
@@ -37,6 +38,7 @@ if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
         else {
          echo "Nincsen üzenet! Írjál egyet!";
         }
+        $db = null;
    
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
            $db = DeveloperDB::CallPDO();
@@ -44,12 +46,13 @@ if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
            if (!empty($message)) {
            $now = date("Y-m-d H:i");
            $d = "message_date"; $f = "from_who"; $t = "message_text";
-           $sql_insert_text = 'INSERT INTO '.$_SESSION["user"].'___chats_page ('.$d.', '.$f.', '.$t.') VALUES (:'.$d.', :'.$f.', :'.$t.')';
+           $sql_insert_text = 'INSERT INTO '.$_SESSION["user"].'__chats_page ('.$d.', '.$f.', '.$t.') VALUES (:'.$d.', :'.$f.', :'.$t.')';
            $stmt = $db->prepare($sql_insert_text);
            $stmt->bindValue(":$d", $now, DeveloperDB::PARAM_STR);
            $stmt->bindValue(":$f", $_SESSION["user"], DeveloperDB::PARAM_STR);
            $stmt->bindValue(":$t", $message, DeveloperDB::PARAM_STR);
            $stmt->execute();
+           echo '<meta http-equiv="refresh" content="0.5">';
          }
            
         }

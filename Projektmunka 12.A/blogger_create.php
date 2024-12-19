@@ -10,12 +10,8 @@ session_start();
 <html lang="hu">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include "head.html"; ?>
     <title>Blogger készítés</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="cucc.css">
     <style>
 
    :root {
@@ -47,27 +43,16 @@ session_start();
         </h1>
     </header>
     <nav class="navbar navbar-expand-lg navbarcucc">
-
         <div class="container-fluid justify-content-center">
-            <!-- Links -->
             <ul class="navbar-nav">
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Kezdőlap</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("cucc.php"); ?>">Kezdőlap</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Felhasználói fiók</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php"); ?>">Közösségi tér</a>
                 </li>
                 <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Közösségi tér</a>
-                </li>
-                <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Üzenetek</a>
-                </li>
-                <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Események</a>
-                </li>
-                <li class="nav-item navpad">
-                    <a class="nav-link" href="#">Cikkek</a>
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogok.php"); ?>">Blogok</a>
                 </li>
             </ul>
         </div>
@@ -84,23 +69,26 @@ session_start();
                     title='Underline Highlighted Text'><u>U</u>
                 </button>
         </fieldset><br>
-        <div id="blog" contenteditable="true">
+        <textarea id="blog" contenteditable="true" style="width: 100%; height: 80px;">
 
-        </div>
+        </textarea>
+        <script>document.getElementById("blog").textContent = "";</script>
 
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" onsubmit="return SubmitContent()">
             <input type="hidden" name="content" id="content">
+            <label for="title">A blog címe:</label>
+            <input type="text" name="title" id="title" required>
             <button type="submit">Publikáld</button>
         </form>
 
         <?php
         $username = $_SESSION['user'];
-        $blog_title = "Most komolyan!!";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             $db = DeveloperDB::CallPDO();
             $blog_content = Login_register::TestInput($_POST["content"]);
             $decoded_content = html_entity_decode($blog_content);
+            $blog_title = Login_register::TestInput($_POST["title"]);
             $u = "blog_username"; $bt = "blog_title"; $bc = "blog_content"; $bm = "blog_made_date";
             $sql_blog = "INSERT INTO blog ($u, $bt, $bc, $bm) VALUES (:$u, :$bt, :$bc, :$bm)";
             $now = date("Y-m-d");
@@ -117,7 +105,7 @@ session_start();
             else{
             $sql_insert = "INSERT INTO blog ($u, $bt, $bc, $bm) VALUES (:$u, :$bt, :$bc, :$bm)";
             $stmt = $db->prepare($sql_insert);
-            $stmt->bindValue(":$u", $username, type: DeveloperDB::PARAM_STR);
+            $stmt->bindValue(":$u", $username, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$bt", $blog_title, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$bc", $decoded_content, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$bm", $now, DeveloperDB::PARAM_STR);
@@ -130,7 +118,7 @@ session_start();
         }
     }
         catch (PDOException $e) {
-            echo 'Hiba történt '. $e->getMessage();
+            echo 'Hiba történt a PDO-val '. $e->getMessage();
         }
     }
     ?>

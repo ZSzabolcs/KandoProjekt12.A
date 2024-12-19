@@ -20,13 +20,10 @@ session_start();
             <div class="container-fluid justify-content-center">
               <ul class="navbar-nav">
                 <li class="nav-item navpad">
-                  <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php");  ?>">Chat szobák</a>
+                  <a class="nav-link" href="<?php echo htmlspecialchars("chatszobak.php"); ?>">Chat szobák</a>
                 </li>
                 <li class="nav-item navpad">
                     <a class="nav-link" href="<?php echo htmlspecialchars("blogger_create.php"); ?>">Blog készítő</a>
-                  </li>
-                  <li class="nav-item navpad">
-                    <a class="nav-link" href="">Események</a>
                   </li>
                   <li class="nav-item navpad">
                     <a class="nav-link" href="<?php echo htmlspecialchars("blogok.php"); ?>">Blogok</a>
@@ -66,7 +63,7 @@ session_start();
               <b>Zelenák Szabolcs</b> - Ötletgazda, tervező és front-end felelős.
             </p>
             <p>
-              <b>Csiger Imre Krisztián</b>, 18 éves, 12. osztályos középiskolás tanuló - Back-end felelős
+              <b>Csiger Imre Krisztián</b>, 19 éves, 12. osztályos középiskolás tanuló - Back-end felelős
             </p>
             <p>
               Ketten hoztuk létre az oldalt egy iskolai projektmunka céljából, ugyanakkor ennél többet látunk benne.

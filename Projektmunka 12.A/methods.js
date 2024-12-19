@@ -20,24 +20,20 @@ const Regist = () => {
 
 
 const SubmitContent = () => {
-    const editorContent = document.getElementById("blog").textContent;
-    const blogTitle = document.getElementById("bl_title").textContent;
+    const editorContent = document.getElementById("blog").value;
+    const blogTitle = document.getElementById("title").value;
 
-    // Ellenőrzés a konzolon, hogy a szövegek jól be lettek olvasva
     console.log("Blog title:", blogTitle);
     console.log("Blog content:", editorContent);
 
     // A rejtett input mezők értékeinek beállítása
     document.getElementById("content").value = editorContent;
-    document.getElementById("title_bl").value = blogTitle;
 
     // Ellenőrizzük, hogy a tartalom sikeresen átkerült-e a rejtett mezőbe
-    if (document.getElementById('content').value.trim() !== "" && document.getElementById("title_bl").value.trim() !== "") {
-        // Ha van tartalom, a form elküldhető
-        return true; // Form küldése
+    if (document.getElementById('content').value.trim() !== "") {
+        return true;
     } else {
-        // Ha nincs tartalom, ne küldje el a formot
         alert("Kérlek, adj meg valamilyen tartalmat!");
-        return false; // Form küldésének megakadályozása
+        return false;
     }
 }
