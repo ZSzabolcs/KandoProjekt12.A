@@ -65,12 +65,12 @@ session_start();
                     $success = $stmt->execute();
                     if ($success) {
                         $_SESSION['user'] = $username;
-                        $sql_create_table = 'CREATE TABLE IF NOT EXISTS ' . $username . '___chats_page  (
+                        $sql_create_table = 'CREATE TABLE IF NOT EXISTS ' . $username . '__chats_page  (
                             "chat_ser_num" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                             "from_who" VARCHAR(30) NOT NULL,
                             "message_text" TEXT NOT NULL,
                             "message_date" DATE NOT NULL,
-                            CONSTRAINT FK_'.$username.'_page FOREIGN KEY ("from_who")
+                            CONSTRAINT FK_'.$username.'_page FOREIGN KEY (from_who)
                             REFERENCES user(username)
                             )';
                         $stmt = $db->prepare($sql_create_table);
@@ -104,6 +104,18 @@ session_start();
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
     </footer>
+
+    <script>
+const Regist = () => {
+    const username_regist = document.querySelector("#username");
+    const email_regist = document.querySelector("#email");
+    const password_regist = document.querySelector("#password");
+    if (username_regist.value === "" || email_regist === "" || password_regist === ""){
+        console.error("Add meg a szükséges adatokat!");
+    }
+    else sessionStorage.setItem("user", username_regist.value);
+}
+    </script>
 </body>
 
 </html>

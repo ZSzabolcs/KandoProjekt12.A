@@ -54,6 +54,7 @@ session_start();
                 <li class="nav-item navpad">
                     <a class="nav-link" href="<?php echo htmlspecialchars("blogok.php"); ?>">Blogok</a>
                 </li>
+                
             </ul>
         </div>
     </nav>
@@ -84,7 +85,6 @@ session_start();
         <?php
         $username = $_SESSION['user'];
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        try {
             $db = DeveloperDB::CallPDO();
             $blog_content = Login_register::TestInput($_POST["content"]);
             $decoded_content = html_entity_decode($blog_content);
@@ -117,13 +117,27 @@ session_start();
 
         }
     }
-        catch (PDOException $e) {
-            echo 'Hiba történt a PDO-val '. $e->getMessage();
-        }
-    }
+        
     ?>
     </div>
-<script src="methods.js"></script>
+<script>
+const SubmitContent = () => {
+    const editorContent = document.getElementById("blog").value;
+    let blogTitle = document.getElementById("title").value;
+    let content = document.getElementById("content").value
+
+    // A rejtett input mezők értékeinek beállítása
+    content = editorContent;
+
+    // Ellenőrizzük, hogy a tartalom sikeresen átkerült-e a rejtett mezőbe
+    if (content.trim() !== "" && blogTitle.trim() !== "") {
+        return true;
+    } else {
+        alert("Kérlek, adj meg valamilyen tartalmat!");
+        return false;
+    }
+}
+</script>
 </body>
 </html>
 

@@ -14,6 +14,21 @@ if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
     <title>Chatszobád</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbarcucc">
+        <div class="container-fluid justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item navpad">
+                    <a class="nav-link" href="<?php echo htmlspecialchars("cucc.php"); ?>">Kezdőlap</a>
+                </li>
+                <li class="nav-item navpad">
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogok.php"); ?>">Blogok</a>
+                </li>
+                <li class="nav-item navpad">
+                    <a class="nav-link" href="<?php echo htmlspecialchars("blogger_create.php"); ?>">Blog készítő felület</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
    <h1><?php echo$_SESSION["user"] ?></h1>
 
    <?php
@@ -24,16 +39,17 @@ if ($_SESSION["user"] === null) Login_register::ToAnotherPage("login.php");
       if(!empty($messages)){
          foreach ($messages as $message) {
             if ($message["from_who"] === $_SESSION["user"]) {
-               echo '<p style="float: right;">'.$message["from_who"].'</p><br><div style="background-color: blue; color: white; float: right;">'.$message['message_text'].'</div>';
-               echo "<br>";
+               echo '<span style="float: right;">'.$message["from_who"].'</span><br><div class="my-message">'.$message['message_text'].'</div>';
+               echo "<br><br>";
             }
             else{
-               echo '<p>'.$message["from_who"].'</p><br><div style="background-color: gray; color: white; float: left;">'.$message["message_text"].'</div>';
-               echo "<br>";
-               echo '<meta http-equiv="refresh" content="0.5">';
+               echo '<p>'.$message["from_who"].'</p><br><div class="others-message">'.$message["message_text"].'</div>';
+               echo "<br><br>";
+               
             }
-
+            
          }
+         
         }
         else {
          echo "Nincsen üzenet! Írjál egyet!";

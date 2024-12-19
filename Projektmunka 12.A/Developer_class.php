@@ -21,7 +21,7 @@ final class DeveloperDB
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $db;
         } catch (PDOException $e) {
-            echo 'Nem létezik PDO adatbázis!';
+            return 'Hiba a PDO adatbázissal! '.$e->getMessage();
         }
     }
 }

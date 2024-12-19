@@ -10,7 +10,6 @@ session_start();
 
 <head>
   <?php include "head.html"; ?>
-  <script src="methods.js" defer></script>
   <title>Bejelentkezés</title>
 </head>
 
@@ -28,11 +27,11 @@ session_start();
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
         <label for="email1">Email cím:</label>
-        <input type="email" id="email1" name="email" required><br>
+        <input type="email" id="email" name="email" required><br>
         <label for="username1" class="my-2">Felhasználónév:</label>
-        <input type="text" id="username1" name="username" required><br>
+        <input type="text" id="username" name="username" required><br>
         <label for="password1">Jelszó:</label>
-        <input type="password" id="password1" name="password" required><br>
+        <input type="password" id="password" name="password" required><br>
         <button type="submit" onclick="Login()" class="submit my-4">Bejelentkezés</button>
       </form>
 
@@ -73,5 +72,16 @@ session_start();
   <footer class="container py-3 footer">
     Footer, lábjegyzet, jogi izék, bla bla bla
   </footer>
+  <script>
+const Login = () => {
+    const username_login = document.querySelector("#username");
+    const email_login = document.querySelector("#email");
+    const password_login = document.querySelector("#password");
+    if (username_login.value.trim() === "" || email_login.value.trim() === "" || password_login.value.trim() === ""){
+        console.error("Add meg a szükséges adatokat!");
+    }
+    else sessionStorage.setItem("user", username_login.value.trim());
+}
+  </script>
 </body>
 </html>
