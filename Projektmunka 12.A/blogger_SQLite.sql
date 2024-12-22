@@ -16,9 +16,7 @@ CREATE TABLE IF NOT EXISTS "blog" (
 "blog_title" VARCHAR(50) UNIQUE NOT NULL,
 "blog_content" TEXT NOT NULL,
 "blog_made_date" DATE NOT NULL,
-"shared_blog_number" INTEGER DEFAULT 0,
-CONSTRAINT FK_blog_user
-FOREIGN KEY (blog_username) REFERENCES user(username)
+"shared_blog_number" INTEGER DEFAULT 0
 );
 
 INSERT INTO "blog" ("blog_username", "blog_title", "blog_content", "blog_made_date") VALUES ('az3', 'Komoly', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum dolorum porro obcaecati non sed recusandae laborum tenetur reiciendis, minima assumenda est id unde ipsam consequatur? Cumque voluptas eius delectus voluptatum!
@@ -36,9 +34,7 @@ CREATE TABLE IF NOT EXISTS "comment" (
 "comment_content" TEXT NOT NULL, 
 "comment_date" DATE NOT NULL, 
 "like_number" INTEGER DEFAULT 0, 
-"dislike_number" INTEGER DEFAULT 0,
-CONSTRAINT FK_comment_user
-FOREIGN KEY (comment_username) REFERENCES user(username)
+"dislike_number" INTEGER DEFAULT 0
 );
 
 

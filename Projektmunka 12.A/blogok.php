@@ -76,10 +76,10 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
                 echo '<div class="collapse container" id="content' . $post[$bi] . '">';
                 if (!empty($comments)) {
                     foreach ($comments as $comment) {
-                        if ($post[$bi] === $comment[$ci]) {
+                        if ($post[$bi] === $comment[$ci] || $post[$bt] === $comment[$tt]) {
                             echo '<div class="comment">';
-                            echo '<span class="commenter">' . htmlspecialchars($comment[$cu]) . ':</span><span> ' . htmlspecialchars($comment[$cd]) . '</span><br>';
-                            echo '<div class="p-3">' . htmlspecialchars($comment[$cc]) . '</div>';
+                            echo '<span class="commenter">' . $comment[$cu] . ':</span><span> ' . $comment[$cd] . '</span><br>';
+                            echo '<div class="p-3">' . $comment[$cc] . '</div>';
                             echo '</div>';
                         }
                     }
@@ -112,6 +112,9 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
             $blog_title = $blogs_info[$_POST["post_id"]][1];
             $insert_sql = 'INSERT INTO "comment" ('.$cu.', '.$tt.', '.$cc.', '.$cd.') VALUES (:'.$cu.', :'.$tt.', :'.$cc.', :'.$cd.')';
             $stmt = $db->prepare($insert_sql);
+            var_dump($commenter);
+            var_dump($blog_title);
+            var_dump($comment_content);
             $stmt->bindValue(":$cu", $commenter, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$tt", $blog_title, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$cc", $comment_content, DeveloperDB::PARAM_STR);
@@ -125,6 +128,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
     </div>
     <footer class="container py-3 footer">
         Footer, lábjegyzet, jogi izék, bla bla bla
+        <?php ?>
     </footer>
     <script>
         const blogs = document.getElementsByClassName("container blogbej my-2 py-2");

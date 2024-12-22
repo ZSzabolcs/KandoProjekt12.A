@@ -1,6 +1,5 @@
 <?php
 namespace Main;
-use PDOException;
 include "Login_register_class.php";
 include "Developer_class.php";
 session_name('user');
