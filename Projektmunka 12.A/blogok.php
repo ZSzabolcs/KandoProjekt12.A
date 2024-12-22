@@ -40,7 +40,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
     $chlimit = 411;
     $num = 0;
     $db = DeveloperDB::CallPDO();
-    $stmt = $db->prepare("SELECT * FROM blog LIMIT 10");
+    $stmt = $db->prepare("SELECT * FROM blog LIMIT 100");
     $stmt->execute();
     $posts = $stmt->fetchAll(DeveloperDB::FETCH_ASSOC);
 

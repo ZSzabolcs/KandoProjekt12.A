@@ -73,13 +73,13 @@ session_start();
         <textarea id="blog" contenteditable="true" style="width: 100%; height: 80px;">
 
         </textarea>
-        <script>document.getElementById("blog").textContent = "";</script>
 
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" onsubmit="return SubmitContent()">
-            <input type="hidden" name="content" id="content">
+
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+            <input type="hidden" name="content" id="content" value="">
             <label for="title">A blog címe:</label>
             <input type="text" name="title" id="title" required>
-            <button type="submit">Publikáld</button>
+            <button type="submit" onclick="SubmitContent()">Publikáld</button>
         </form>
 
         <?php
@@ -87,12 +87,10 @@ session_start();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $db = DeveloperDB::CallPDO();
             $blog_content = Login_register::TestInput($_POST["content"]);
-            $decoded_content = $blog_content;
             $blog_title = Login_register::TestInput($_POST["title"]);
             $u = "blog_username"; $bt = "blog_title"; $bc = "blog_content"; $bm = "blog_made_date";
             $sql_blog = "INSERT INTO blog ($u, $bt, $bc, $bm) VALUES (:$u, :$bt, :$bc, :$bm)";
             $now = date("Y-m-d");
-
             $sql_check_blog_title = "SELECT COUNT(*) as piece FROM blog WHERE $bt = :$bt";
             $stmt = $db->prepare($sql_check_blog_title);
             $stmt->bindValue(":$bt", $blog_title, DeveloperDB::PARAM_STR);
@@ -107,12 +105,14 @@ session_start();
             $stmt = $db->prepare($sql_insert);
             $stmt->bindValue(":$u", $username, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$bt", $blog_title, DeveloperDB::PARAM_STR);
-            $stmt->bindValue(":$bc", $decoded_content, DeveloperDB::PARAM_STR);
+            $stmt->bindValue(":$bc", $blog_content, DeveloperDB::PARAM_STR);
             $stmt->bindValue(":$bm", $now, DeveloperDB::PARAM_STR);
 
             $success = $stmt->execute();
                 if ($success) {
-                    echo "Sikeres feltöltés!";
+                    echo "Blog feltöltve!";
+                    Login_register::ToAnotherPage("blogok.php");
+
                 }
 
         }
@@ -122,12 +122,12 @@ session_start();
     </div>
 <script>
 const SubmitContent = () => {
-    const editorContent = document.getElementById("blog").value;
+    let editorContent = document.getElementById("blog").value;
     let blogTitle = document.getElementById("title").value;
-    let content = document.getElementById("content").value
+    let content = document.getElementById("content")
 
     // A rejtett input mezők értékeinek beállítása
-    content = editorContent;
+    content.value = editorContent;
 
     // Ellenőrizzük, hogy a tartalom sikeresen átkerült-e a rejtett mezőbe
     if (content.trim() !== "" && blogTitle.trim() !== "") {
