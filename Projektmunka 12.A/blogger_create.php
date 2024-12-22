@@ -87,7 +87,7 @@ session_start();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $db = DeveloperDB::CallPDO();
             $blog_content = Login_register::TestInput($_POST["content"]);
-            $decoded_content = html_entity_decode($blog_content);
+            $decoded_content = $blog_content;
             $blog_title = Login_register::TestInput($_POST["title"]);
             $u = "blog_username"; $bt = "blog_title"; $bc = "blog_content"; $bm = "blog_made_date";
             $sql_blog = "INSERT INTO blog ($u, $bt, $bc, $bm) VALUES (:$u, :$bt, :$bc, :$bm)";

@@ -38,9 +38,7 @@ CREATE TABLE IF NOT EXISTS "comment" (
 "like_number" INTEGER DEFAULT 0, 
 "dislike_number" INTEGER DEFAULT 0,
 CONSTRAINT FK_comment_user
-FOREIGN KEY (comment_username) REFERENCES user(username),
-CONSTRAINT FK_comment_blog_title 
-FOREIGN KEY (target_title) REFERENCES blog(blog_title)
+FOREIGN KEY (comment_username) REFERENCES user(username)
 );
 
 

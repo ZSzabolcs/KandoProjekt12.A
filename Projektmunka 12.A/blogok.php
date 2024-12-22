@@ -108,7 +108,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
             $db = DeveloperDB::CallPDO();
             $now = date("Y-m-d H:i");
             $commenter = $_SESSION["user"];
-            $comment_content = $_POST["comment_text"];
+            $comment_content = Login_register::TestInput($_POST["comment_text"]);
             $blog_title = $blogs_info[$_POST["post_id"]][1];
             $insert_sql = 'INSERT INTO "comment" ('.$cu.', '.$tt.', '.$cc.', '.$cd.') VALUES (:'.$cu.', :'.$tt.', :'.$cc.', :'.$cd.')';
             $stmt = $db->prepare($insert_sql);
@@ -119,7 +119,7 @@ if ($_SESSION["user"] === null)  Login_register::ToAnotherPage("login.php");
             $stmt->execute();
             echo '<meta http-equiv="refresh" content="0.5">';
         }
-
+        
         $db = null;
         ?>
     </div>
